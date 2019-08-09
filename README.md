@@ -1,6 +1,6 @@
 # PasswordGenerator
 Password generator program for Windows. This program is a part of my Independent Research class written on C#.
-The program has different settings and two modes: first mode is a random character mode. The length and set of special symbols can be chosen by a user. In the second mode the program peeks an English word from a list of words that was downloaded and stored on the computer (C:\Password Generator) at the first run of the program and modifys it. User has an option to choose his/her own word.
+The program has different settings and two modes: first mode is a random character mode. The length and set of special symbols can be chosen by a user. In the second mode the program peeks an English word from a list of words that was downloaded and stored on the computer (C:\Users\[user name]\AppData\Local\My Applications\Password Generator) at the first run of the program and modifys it. User has an option to choose his/her own word.
 All passwords can be stored on the computer in encrypted form. For encription Vigenere's algorithm with some modifications was used.
 
 Project structure:
