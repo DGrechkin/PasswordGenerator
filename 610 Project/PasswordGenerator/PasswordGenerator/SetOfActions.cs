@@ -19,9 +19,8 @@ namespace PasswordGenerator
             char[] symbols = set.NewSetOfSymbols(set.NewAlphabet(97, 123)); //Generate a new set of symbols from the alphabet
 
             PasswordProduction pass = new PasswordProduction();
-            string password;
+            string password = pass.GeneratePassword(symbols, passLength, specialSymbols); // Generate password;
 
-            password = pass.GeneratePassword(symbols, passLength, specialSymbols); // Generate password
             return password;
         }
 

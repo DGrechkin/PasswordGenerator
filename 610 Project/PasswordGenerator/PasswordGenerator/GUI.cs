@@ -19,7 +19,8 @@ namespace PasswordGenerator
             InitializeComponent();
         }
 
-        private string path_options = @"C:\Password Generator\path.txt"; //Path to a file that contains path to passwords
+        private string folderPath = 
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\My Applications\\Password Generator"; //Path to folder
         private string path; //Variable that used for storing path to passwords
 
         //Radio button for pronouncable password
@@ -52,28 +53,23 @@ namespace PasswordGenerator
             loadForm(); //Load the form
         }
         //Method, tat can be recalled later
-        private void loadForm()
+        private async void loadForm()
         {
-            string directory_path = @"C:\Password Generator\";
-            if (!Directory.Exists(directory_path))
+            if (!Directory.Exists(folderPath))
             {
-                Directory.CreateDirectory(directory_path);
+                Directory.CreateDirectory(folderPath);
             }
 
-            if (!File.Exists(path_options)) //Creates the options file if it doesn't exist
+            if (Properties.Settings.Default.FirstRunSetting) //Creates the options file if it doesn't exist
             {
-                using (StreamWriter sw = new StreamWriter(path_options))
-                {
-                    sw.WriteLine(@"C:\Password Generator\Passwords.txt"); //Default directory for the passwords file
-                }
+                Properties.Settings.Default.FirstRunSetting = false;
+                Properties.Settings.Default.PathToFile = folderPath + "\\Passwords.txt"; //Default directory for the passwords file
+                Properties.Settings.Default.Save();
             }
 
-            using (StreamReader sr = new StreamReader(path_options))
-            {
-                path = sr.ReadLine();
-                path_field.Text = path;
-            }
-
+            path = Properties.Settings.Default.PathToFile;
+            path_field.Text = path;
+         
             if (!File.Exists(path)) //Creates the passwords file if it doesn't exist
             {
                 File.Create(path).Close();
@@ -94,20 +90,23 @@ namespace PasswordGenerator
                 }
             }
 
-
             //Download the words file.
-            string path_words = @"C:\Password Generator\words.txt"; //Directory, where the file with words is stored.
+            string path_words = folderPath + "\\words.txt"; //Directory, where the file with words is stored.
             if (!File.Exists(path_words)) //Download the words file if it doesn't exist
             {
+                pronPass_radio.Enabled = false;
+
                 using (WebClient wc = new WebClient())
                 {
                     string url = "https://raw.githubusercontent.com/dwyl/english-words/master/words.txt";
                     Uri uri = new Uri(url);
-                    wc.DownloadFile(uri, path_words);
+                    await wc.DownloadFileTaskAsync(uri, path_words);
                 }
+
+                pronPass_radio.Enabled = true;
             }
         }
-
+        
         //Generate button functions
         private void generate_button_Click(object sender, EventArgs e)
         {
@@ -178,10 +177,8 @@ namespace PasswordGenerator
                     File.Move(path, newPath); //Move the password file to the new directory
                     path = newPath; //update global path variable
 
-                    using (StreamWriter sw = new StreamWriter(path_options))
-                    {
-                        sw.WriteLine(newPath);//update the path in the options file
-                    }
+                    Properties.Settings.Default.PathToFile = newPath;
+                    Properties.Settings.Default.Save();
                 }
                 else //If file "Password.txt" exists on the new path
                 {
@@ -195,10 +192,9 @@ namespace PasswordGenerator
                     {
                         path = newPath; //update global path variable
 
-                        using (StreamWriter sw = new StreamWriter(path_options))
-                        {
-                            sw.WriteLine(newPath); //update the path in the options file
-                        }
+                        Properties.Settings.Default.PathToFile = newPath;
+                        Properties.Settings.Default.Save();
+
                         loadForm();
                     }
                     else //otherwise, rise another question.
@@ -212,10 +208,8 @@ namespace PasswordGenerator
                             File.Move(path, newPath); //Move the password file to the new directory
                             path = newPath; //update global path variable
 
-                            using (StreamWriter sw = new StreamWriter(path_options))
-                            {
-                                sw.WriteLine(newPath);//update the path in the options file
-                            }
+                            Properties.Settings.Default.PathToFile = newPath;
+                            Properties.Settings.Default.Save();
                         }
                         else
                         {
