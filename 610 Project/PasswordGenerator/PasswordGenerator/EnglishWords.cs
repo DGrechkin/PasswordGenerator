@@ -10,6 +10,21 @@ namespace PasswordGenerator
 {
     class EnglishWords
     {
+        private string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + 
+            "\\My Applications\\Password Generator\\words.txt";
+        private int fileLines = 0; //Number of lines in the text file
+
+        public EnglishWords()
+        {
+            using (StreamReader sr = new StreamReader(path))
+            {
+                while (sr.ReadLine() != null)
+                {
+                    fileLines++;
+                }
+            }
+        }
+
         //Method to peek a word or several words
         public string GetWord ()
         {
@@ -47,9 +62,8 @@ namespace PasswordGenerator
         private string ExtractFromFile()
         {
             Random random = new Random();
-            string path = @"C:\Password Generator\words.txt";
-
-            int lineNumber = random.Next(1, 466548);//466548 - number of lines in word.txt 3/20/2019
+            
+            int lineNumber = random.Next(1, fileLines);//466548 - number of lines in word.txt 3/20/2019
             string word = File.ReadLines(path).Skip(lineNumber - 1).Take(1).First(); //peek random line from the file
             return word;
         }

@@ -50,11 +50,11 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.main_tab = new System.Windows.Forms.TabPage();
             this.options_tab = new System.Windows.Forms.TabPage();
+            this.about_button = new System.Windows.Forms.Button();
             this.browse_button = new System.Windows.Forms.Button();
             this.path_field = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
-            this.about_button = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.length_field)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -139,7 +139,7 @@
             this.length_field.Size = new System.Drawing.Size(41, 20);
             this.length_field.TabIndex = 2;
             this.length_field.Value = new decimal(new int[] {
-            32,
+            16,
             0,
             0,
             0});
@@ -304,6 +304,16 @@
             this.options_tab.TabIndex = 1;
             this.options_tab.Text = "Options";
             // 
+            // about_button
+            // 
+            this.about_button.Location = new System.Drawing.Point(363, 232);
+            this.about_button.Name = "about_button";
+            this.about_button.Size = new System.Drawing.Size(98, 23);
+            this.about_button.TabIndex = 3;
+            this.about_button.Text = "About...";
+            this.about_button.UseVisualStyleBackColor = true;
+            this.about_button.Click += new System.EventHandler(this.about_button_Click);
+            // 
             // browse_button
             // 
             this.browse_button.Location = new System.Drawing.Point(363, 27);
@@ -329,16 +339,6 @@
             this.label5.Size = new System.Drawing.Size(32, 13);
             this.label5.TabIndex = 0;
             this.label5.Text = "Path:";
-            // 
-            // about_button
-            // 
-            this.about_button.Location = new System.Drawing.Point(363, 232);
-            this.about_button.Name = "about_button";
-            this.about_button.Size = new System.Drawing.Size(98, 23);
-            this.about_button.TabIndex = 3;
-            this.about_button.Text = "About...";
-            this.about_button.UseVisualStyleBackColor = true;
-            this.about_button.Click += new System.EventHandler(this.about_button_Click);
             // 
             // GUI
             // 
